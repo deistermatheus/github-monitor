@@ -17,7 +17,7 @@ def capture_repository_commits_task(user, repository):
             sha=commit_raw_data['sha'],
             author=commit_raw_data['commit']['author']['name'],
             url=commit_raw_data['url'],
-            # avatar=commit_raw_data['commit']['author'].get('avatar_url', ''),
+            avatar=commit_raw_data['author']['avatar_url'] or commit_raw_data['committer']['avatar_url'],
             date=commit_raw_data['commit']['author']['date'],
             repository=repository_object
         ).save()

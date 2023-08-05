@@ -30,9 +30,7 @@ class GitHubService:
         return get_repository_response.status_code == 200
 
     def get_repository_commits(self, user, repository):
-        page = 1
-        all_commits = []
-
+        # FIXME: these should be function parameters and not hardcoded
         NOW = datetime.date.today()
         THIRTY_DAYS_FROM_NOW = NOW - datetime.timedelta(30)
 
@@ -42,18 +40,16 @@ class GitHubService:
             'per_page': 10
         }
 
+        page = 1
+        all_commits = []
+        request_url = f'{self.BASE_URL}/repos/{user}/{repository}/commits'
+
         while True:
-            commits_response = requests.get(
-                f'{self.BASE_URL}/repos/{user}/{repository}/commits', headers=self.get_request_headers(user), params={**params, 'page': page})
-            print(commits_response.url)
-            commits_response_data = json.loads(commits_response.text)
+            commits_page = requests.get(
+                request_url, headers=self.get_request_headers(user), params={**params, 'page': page}).json()
 
-            if (len(commits_response_data)):
-                [all_commits.append(commit)
-                 for commit in commits_response_data]
+            if len(commits_page):
+                all_commits = all_commits + commits_page
                 page = page + 1
-                commits_response_data = []
             else:
-                break
-
-        return all_commits
+                return all_commits
