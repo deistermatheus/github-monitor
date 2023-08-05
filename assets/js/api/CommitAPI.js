@@ -7,16 +7,17 @@ import {
 
 export const getCommits = () => axios.get(`/api/commits/`)
   .then((response) => {
-    store.dispatch(getCommitsSuccess({...response.data}));
+    store.dispatch(getCommitsSuccess({...response.data.results}));
   });
 
 export const getRepositories = () => axios.get(`/api/repositories/`)
 .then((response) => {
-  store.dispatch(getRepositoriesSuccess({...response.data}));
+  store.dispatch(getRepositoriesSuccess({...response.data.results}));
 });
 
 export const createRepository = (values, headers, formDispatch) => axios.post('/api/repositories/', values, {headers})
   .then((response) => {
+    console.log(response)
     store.dispatch(createRepositorySuccess(response.data, true));
     formDispatch(reset('repoCreate'));
   }).then(() => {

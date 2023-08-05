@@ -4,6 +4,7 @@ dj-database-url==2.0.0
 Django==4.2.1
 djangorestframework==3.14.0
 django-webpack-loader==2.0.0
+django_filter==23.2
 psycopg2-binary==2.9.6
 python-decouple==3.8
 pytz==2023.3
