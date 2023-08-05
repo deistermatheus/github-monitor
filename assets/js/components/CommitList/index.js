@@ -33,7 +33,7 @@ const CommitList = (props) => {
                       {' '}
                       at
                       {' '}
-                      {commit.date}
+                      {new Date(commit.date).toLocaleString()}
                     </small>
                     {index !== commits.length - 1 && <hr />}
                   </div>
