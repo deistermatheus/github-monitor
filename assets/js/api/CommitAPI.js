@@ -5,7 +5,7 @@ import {
   createRepositorySuccess, getCommitsSuccess, getRepositoriesSuccess,
 } from '../actions/CommitActions';
 
-export const getCommits = () => axios.get(`/api/commits/`)
+export const getCommits = ({ params = { }}) => axios.get(`/api/commits/`, { params })
   .then((response) => {
     store.dispatch(getCommitsSuccess({...response.data.results}));
   });

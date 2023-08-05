@@ -10,10 +10,10 @@ class RepoListContainer extends React.Component {
   }
 
   render() {
-    const { repositories } = this.props;
+    const { repositories, ...extraProps } = this.props;
     return (
       <div>
-        <RepoList repositories={repositories}/>
+        <RepoList repositories={repositories} extraProps={extraProps}/>
       </div>
     );
   }

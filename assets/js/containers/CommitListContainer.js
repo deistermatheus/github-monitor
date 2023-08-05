@@ -6,14 +6,25 @@ import CommitList from '../components/CommitList';
 
 class CommitListContainer extends React.Component {
   componentDidMount() {
-    commitAPI.getCommits();
+    commitAPI.getCommits(this.getQueryParamsForApiCall({ params: this.getQueryParamsForApiCall()}));
+  }
+
+  getQueryParamsForApiCall(){
+      const rawSearch = new URLSearchParams(this.props.location.search); 
+      return Object.fromEntries(rawSearch.entries())    
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.location.search !== prevProps.location.search){
+       commitAPI.getCommits({ params: this.getQueryParamsForApiCall()})
+    }
   }
 
   render() {
-    const {commits} = this.props;
+    const {commits, ...extraProps} = this.props;
     return (
       <div>
-        <CommitList commits={commits} />
+        <CommitList commits={commits} extraProps={extraProps}/>
       </div>
     );
   }

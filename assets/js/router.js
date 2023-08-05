@@ -1,10 +1,12 @@
 import React from 'react';
 import {
-    Link, BrowserRouter as Router, Route, Switch,
+    Link, BrowserRouter as Router, Route, Switch, withRouter
 } from 'react-router-dom';
 import CommitListContainer from './containers/CommitListContainer';
 import RepoCreateContainer from './containers/RepoCreateContainer';
 import RepoListContainer from './containers/RepoListContainer';
+
+const RepoListWithRouterProps = withRouter(RepoListContainer)
 
 export default (
     <Router>
@@ -19,7 +21,7 @@ export default (
                     </li>
                 </ul>
                 <ul className="sidebar-nav">
-                   <RepoListContainer/>
+                  <RepoListWithRouterProps/ >
                 </ul>
             </div>
 
