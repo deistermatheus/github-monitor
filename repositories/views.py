@@ -14,11 +14,18 @@ from common.services import GitHubService
 from repositories.tasks import capture_repository_commits_task
 
 
+class LargePagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class RepositoryView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Repository.objects.all()
     serializer_class = RepositorySerializer
     github_client = GitHubService()
+    pagination_class = LargePagination
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

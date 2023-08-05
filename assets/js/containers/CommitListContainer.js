@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as commitAPI from '../api/CommitAPI';
 import CommitList from '../components/CommitList';
+import CommitPaginationControl from '../components/CommitPaginationControl';
 
 class CommitListContainer extends React.Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class CommitListContainer extends React.Component {
     return (
       <div>
         <CommitList commits={commits} extraProps={extraProps}/>
+        <CommitPaginationControl extraProps={extraProps}/>
       </div>
     );
   }
