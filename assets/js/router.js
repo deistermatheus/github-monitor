@@ -1,12 +1,20 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import {
-  Link, BrowserRouter as Router, Route, Switch,
+  BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
+import store from './store';
 import CommitListContainer from './containers/CommitListContainer';
 import RepoCreateContainer from './containers/RepoCreateContainer';
 import RepoListContainer from './containers/RepoListContainer';
+import { updateAppQuery } from './actions/CommitActions';
 
-// const RepoListWithRouterProps = withRouter(RepoListContainer);
+const { dispatch } = store;
+
+const clickHandler = (e) => {
+  e.preventDefault();
+  dispatch(updateAppQuery({}));
+};
 
 export default (
   <Router>
@@ -15,9 +23,9 @@ export default (
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li className="sidebar-brand align-items-center">
-            <Link to="/">
+            <a href="#" onClick={clickHandler}>
               Github Monitor
-            </Link>
+            </a>
           </li>
         </ul>
         <ul className="sidebar-nav">
