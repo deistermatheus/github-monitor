@@ -1,6 +1,6 @@
 // Units in milliseconds
 export const REPOSITORY_ADD_REFRESH_DELAY = 1500;
-export const INFO_MESSAGE_EXPIRATION = 4000;
+export const INFO_MESSAGE_EXPIRATION = 1500;
 
 // base urls
 

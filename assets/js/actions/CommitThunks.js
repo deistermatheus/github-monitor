@@ -84,12 +84,12 @@ export function refreshAppData(config = {}) {
   };
 }
 
-export function updateAppQuery(payload) {
+export function updateAppQuery(payload, isFirstRender = false) {
   return (dispatch) => {
     dispatch(updateLoadingState(true));
     dispatch(updateCommitQuery(payload));
     dispatch(syncQueryToBrowserSearch());
-    dispatch(refreshAppData({ isFirstRender: false }));
+    dispatch(refreshAppData({ isFirstRender }));
     dispatch(updateLoadingState(false));
   };
 }

@@ -3,14 +3,14 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { refreshAppData } from '../actions';
+import { updateAppQuery } from '../actions';
 import CommitList from '../components/CommitList';
 import CommitPaginationControl from '../components/CommitPaginationControl';
 
 class CommitListContainer extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(refreshAppData({ isFirstRender: true }));
+    dispatch(updateAppQuery({}, false));
   }
 
   render() {
