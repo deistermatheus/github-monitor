@@ -1,41 +1,25 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-
-const addQuery = (props) => (key, value) => {
-  let pathname = props.location.pathname;
-  // returns path: '/app/books'
-  let searchParams = new URLSearchParams(props.location.search);
-  // returns the existing query string: '?type=fiction&author=fahid'
-
-  console.log("wtf?")
-  const keys = [...searchParams.keys()]
-  keys.forEach(key => {
-    searchParams.delete(key)
-  })
-
-  searchParams.set(key, value);
-  
-  props.history.push({
-    pathname: pathname,
-    search: searchParams.toString()
-  })
-}
+import { updateAppQuery } from '../../actions/CommitActions';
 
 const RepoList = (props) => {
-  const { repositories, extraProps } = props;
-  const addQueryToPath = addQuery(extraProps)
-  return (repositories.map(repo => ( <li className="sidebar-brand" key={repo.name}>
-    <a href="#" onClick={(e) => {
-                         e.preventDefault()
-                         addQueryToPath('repository', repo.name)
-                      }}>
-                      {repo.name}
-                      </a>   
-</li>)))
-}
+  const { repositories, dispatch } = props;
+  const createClickHandler = (repoName) => (e) => {
+    e.preventDefault();
+    dispatch(updateAppQuery({ repository: repoName }));
+  };
+  return (repositories.map((repo) => (
+    <li className="sidebar-brand mr-2" key={repo.name}>
+      <button onClick={createClickHandler(repo.name)} type="button" className="btn btn-outline-light btn-block mt-2 mb-2 mr-6 ml-6">{repo.name}</button>
+    </li>
+  )));
+};
 
 RepoList.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   repositories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default RepoList;

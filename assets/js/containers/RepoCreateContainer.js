@@ -1,29 +1,42 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import * as commitAPI from '../api/CommitAPI';
+import { connect } from 'react-redux';
+import { createRepository } from '../actions/CommitActions';
 import Form from '../components/RepoCreateForm';
 
 class RepoCreateContainer extends React.Component {
-  submit = (values, dispatch) => {
+  submit = (values, formDispatch) => {
     const token = document.getElementById('main').dataset.csrftoken;
-    const name = values.name.split('/')[1];
-    const v = {...values, name};
-    return commitAPI.createRepository(v, {'X-CSRFToken': token}, dispatch);
+    const [, name] = values.name.split('/');
+    const formData = { ...values, name };
+    // eslint-disable-next-line react/prop-types
+    const { dispatch } = this.props;
+    // return commitAPI.createRepository(v, { 'X-CSRFToken': token }, formDispatch);
+    dispatch(createRepository(formData, { 'X-CSRFToken': token }, formDispatch));
   };
 
   render() {
-    const {successMessage} = this.props;
-    return <Form onSubmit={this.submit} successMessage={successMessage} />;
+    const { successMessage, errorMessage } = this.props;
+    return (
+      <Form
+        onSubmit={this.submit}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+      />
+    );
   }
 }
 
 RepoCreateContainer.propTypes = {
   successMessage: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  errorMessage: PropTypes.string,
 };
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   successMessage: store.commitState.successMessage,
+  errorMessage: store.commitState.errorMessage,
 });
 
 export default connect(mapStateToProps)(RepoCreateContainer);

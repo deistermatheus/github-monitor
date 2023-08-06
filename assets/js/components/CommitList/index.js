@@ -1,26 +1,12 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-const addQuery = (props) => (key, value) => {
-  let pathname = props.location.pathname;
-  // returns path: '/app/books'
-  let searchParams = new URLSearchParams(props.location.search);
-  // returns the existing query string: '?type=fiction&author=fahid'
-
-  if(searchParams.has(key)){
-     searchParams.delete(key)  
-  }
-
-  searchParams.append(key, value);
-  
-  props.history.push({
-    pathname: pathname,
-    search: searchParams.toString()
-  })
-}
+import { updateAppQuery } from '../../actions/CommitActions';
 
 const CommitList = (props) => {
-  const { commits, extraProps } = props;
-  const addQueryToPath = addQuery(extraProps)
+  const { commits, dispatch } = props;
   return (
     <div>
       {commits.length !== 0 && (
@@ -29,7 +15,6 @@ const CommitList = (props) => {
             <div className="card-header">
               Commit List
             </div>
-
             <div className="card-body">
               {commits.map((commit, index) => (
                 <div key={commit.sha}>
@@ -41,22 +26,28 @@ const CommitList = (props) => {
                       {commit.message}
                     </p>
                     <small className="text-muted">
-                      <a href="#" onClick={(e) => {
-                         e.preventDefault()
-                         addQueryToPath('author', commit.author)
-                      }}>
-                      {commit.author}
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          dispatch(updateAppQuery({ author: commit.author }));
+                        }}
+                      >
+                        {commit.author}
                       </a>
                       {' '}
                       authored
                       {' '}
                       on
                       {' '}
-                      <a href="#" onClick={(e) => {
-                         e.preventDefault()
-                         addQueryToPath('repository', commit.repository)
-                      }}>
-                      {commit.repository}
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          dispatch(updateAppQuery({ repository: commit.repository }));
+                        }}
+                      >
+                        {commit.repository}
                       </a>
                       {' '}
                       at
@@ -68,12 +59,10 @@ const CommitList = (props) => {
                 </div>
               ))}
             </div>
-            
+
           </div>
         </div>
-      )
-      
-      }
+      )}
     </div>
 
   );
@@ -81,6 +70,7 @@ const CommitList = (props) => {
 
 CommitList.propTypes = {
   commits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default CommitList;

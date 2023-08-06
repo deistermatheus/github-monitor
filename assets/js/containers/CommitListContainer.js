@@ -1,32 +1,30 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import * as commitAPI from '../api/CommitAPI';
+import { connect } from 'react-redux';
+import { refreshAppData } from '../actions/CommitActions';
 import CommitList from '../components/CommitList';
 import CommitPaginationControl from '../components/CommitPaginationControl';
 
 class CommitListContainer extends React.Component {
   componentDidMount() {
-    commitAPI.getCommits(this.getQueryParamsForApiCall({ params: this.getQueryParamsForApiCall()}));
-  }
-
-  getQueryParamsForApiCall(){
-      const rawSearch = new URLSearchParams(this.props.location.search); 
-      return Object.fromEntries(rawSearch.entries())    
-  }
-
-  componentDidUpdate(prevProps){
-    if(this.props.location.search !== prevProps.location.search){
-       commitAPI.getCommits({ params: this.getQueryParamsForApiCall()})
-    }
+    const { dispatch } = this.props;
+    dispatch(refreshAppData({ isFirstRender: true }));
   }
 
   render() {
-    const {commits, ...extraProps} = this.props;
+    const {
+      commits, dispatch, commitPagination, isLoading,
+    } = this.props;
     return (
       <div>
-        <CommitList commits={commits} extraProps={extraProps}/>
-        <CommitPaginationControl extraProps={extraProps}/>
+        <CommitList commits={commits} dispatch={dispatch} isLoading={isLoading} />
+        <CommitPaginationControl
+          dispatch={dispatch}
+          pagination={commitPagination}
+          isLoading={isLoading}
+        />
       </div>
     );
   }
@@ -34,10 +32,18 @@ class CommitListContainer extends React.Component {
 
 CommitListContainer.propTypes = {
   commits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  commitPagination: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   commits: store.commitState.commits,
+  commitPagination: {
+    ...store.commitState.fetchCommitState.pagination,
+    page: store.commitState.fetchCommitState.query.page,
+  },
+  isLoading: store.commitState.isLoading,
 });
 
 export default connect(mapStateToProps)(CommitListContainer);

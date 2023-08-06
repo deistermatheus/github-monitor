@@ -1,26 +1,28 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import {Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 const renderField = ({
-  input, placeholder, className, type, meta: {touched, error, invalid},
+  input, placeholder, className, type, meta: { touched, error, invalid },
 }) => (
-    <div>
-      <input
-        {...input}
-        placeholder={placeholder}
-        className={`${className} ${touched && invalid ? 'is-invalid' : ''}`}
-        type={type}
-      />
-      {touched
+  <div>
+    <input
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...input}
+      placeholder={placeholder}
+      className={`${className} ${touched && invalid ? 'is-invalid' : ''}`}
+      type={type}
+    />
+    {touched
         && ((error && (
           <div className="invalid-feedback">
             {error}
           </div>
-        )))
-      }
-    </div>
-  );
+        )))}
+  </div>
+);
 
 renderField.propTypes = {
   input: PropTypes.object.isRequired,
@@ -32,7 +34,7 @@ renderField.propTypes = {
 
 const RepoCreateForm = (props) => {
   const {
-    successMessage, handleSubmit, pristine, submitting,
+    successMessage, handleSubmit, pristine, submitting, errorMessage,
   } = props;
   return (
     <div>
@@ -42,6 +44,11 @@ const RepoCreateForm = (props) => {
             Repository added successfully!
           </div>
         )}
+      {errorMessage && (
+      <div className="alert alert-danger" role="alert">
+        { errorMessage }
+      </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="col-10">
@@ -69,13 +76,17 @@ RepoCreateForm.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   successMessage: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  errorMessage: PropTypes.oneOf([PropTypes.string, null]),
 };
 
 const validate = (values) => {
-  const {username} = document.getElementById('main').dataset;
+  const { username } = document.getElementById('main').dataset;
   const errors = {};
   if (!values.name || !values.name.startsWith(`${username}/`)) {
     errors.name = `Repository must belong to you (eg: ${username}/repo-name)`;
+  } else if (!(values.name.replace(`${username}/`, '').length)) {
+    errors.name = 'Repository name cannot be blank!';
   }
   return errors;
 };
