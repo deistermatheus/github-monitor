@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import { updateAppQuery } from '../../actions/CommitActions';
+import { updateAppQuery } from '../../actions';
 
 const RepoList = (props) => {
   const { repositories, dispatch } = props;

@@ -5,6 +5,5 @@ import reducers from './reducers/Index';
 
 const thunk = baseThunkMiddleware.withExtraArgument({ axios });
 const store = createStore(reducers, applyMiddleware(thunk));
-// debug
-window.store = store;
+
 export default store;

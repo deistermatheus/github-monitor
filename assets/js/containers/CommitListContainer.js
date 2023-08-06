@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { refreshAppData } from '../actions/CommitActions';
+import { refreshAppData } from '../actions';
 import CommitList from '../components/CommitList';
 import CommitPaginationControl from '../components/CommitPaginationControl';
 

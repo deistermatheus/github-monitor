@@ -7,7 +7,7 @@ import store from './store';
 import CommitListContainer from './containers/CommitListContainer';
 import RepoCreateContainer from './containers/RepoCreateContainer';
 import RepoListContainer from './containers/RepoListContainer';
-import { updateAppQuery } from './actions/CommitActions';
+import { updateAppQuery } from './actions';
 
 const { dispatch } = store;
 

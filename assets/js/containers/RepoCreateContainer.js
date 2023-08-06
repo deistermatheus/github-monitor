@@ -2,7 +2,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createRepository } from '../actions/CommitActions';
+import { createRepository } from '../actions';
 import Form from '../components/RepoCreateForm';
 
 class RepoCreateContainer extends React.Component {
@@ -12,7 +12,6 @@ class RepoCreateContainer extends React.Component {
     const formData = { ...values, name };
     // eslint-disable-next-line react/prop-types
     const { dispatch } = this.props;
-    // return commitAPI.createRepository(v, { 'X-CSRFToken': token }, formDispatch);
     dispatch(createRepository(formData, { 'X-CSRFToken': token }, formDispatch));
   };
 
