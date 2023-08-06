@@ -5,4 +5,4 @@ export const INFO_MESSAGE_EXPIRATION = 1500;
 // base urls
 
 export const REPOSITORIES_BASE_URL = '/api/repositories/';
-export const COMMITS_BASE_URL = '/api/commits';
+export const COMMITS_BASE_URL = '/api/commits/';
