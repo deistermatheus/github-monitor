@@ -75,11 +75,12 @@ export function syncQueryToBrowserSearch() {
     // returns the existing query string: '?type=fiction&author=fahid'
 
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, value] of Object.entries(commitQuery)) {
-      if (searchParams.has(key)) {
-        searchParams.delete(key);
-      }
+    for (const key of searchParams.keys()) {
+      searchParams.delete(key);
+    }
 
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(commitQuery)) {
       searchParams.append(key, value);
     }
 
