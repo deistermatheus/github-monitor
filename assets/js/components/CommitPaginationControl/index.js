@@ -10,7 +10,6 @@ const CommitPaginationControl = (props) => {
   const incrementPage = (e) => {
     e.preventDefault();
     const nextPage = Number(page) + 1;
-    console.log('cq', query)
     dispatch(updateAppQuery({ ...query, page: nextPage }));
   };
 
