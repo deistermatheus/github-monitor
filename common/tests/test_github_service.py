@@ -3,8 +3,6 @@ from unittest.mock import patch
 import requests
 from ..services import GitHubService
 
-# FIXME: refactor to use responses module or a better mock
-
 
 class MockResponse:
     def __init__(self, data):

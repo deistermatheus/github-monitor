@@ -54,15 +54,12 @@ class CeleryTaskFunctionTests(unittest.TestCase):
 
     def tearDown(self):
         Repository.objects.filter(name='cat-store').delete()
-    # Mock the Celery task function
 
     @patch.object(GitHubService, 'get_repository_commits')
     def test_capture_repository_commits_task(self, mock_get_repository_commits):
-        # Set the return value for the mocked task
         mock_get_repository_commits.side_effect = [
             [get_mocked_git_commit(i) for i in range(1, 11)]]
 
-        # Call the Celery task synchronously using `apply_async`
         result = capture_repository_commits_task(
             'some-user', self.repository.name)
         self.assertEqual(result['repository'], str(self.repository))
@@ -70,11 +67,9 @@ class CeleryTaskFunctionTests(unittest.TestCase):
 
     @patch.object(GitHubService, 'get_repository_commits')
     def test_capture_repository_commits_without_author_task(self, mock_get_repository_commits):
-        # Set the return value for the mocked task
         mock_get_repository_commits.side_effect = [
             [get_mocked_git_commit_without_author(i) for i in range(1, 11)]]
 
-        # Call the Celery task synchronously using `apply_async`
         result = capture_repository_commits_task(
             'some-user', self.repository.name)
         self.assertEqual(result['repository'], str(self.repository))

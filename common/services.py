@@ -30,7 +30,6 @@ class GitHubService:
         return get_repository_response.status_code == 200
 
     def get_repository_commits(self, user, repository):
-        # FIXME: these should be function parameters and not hardcoded
         NOW = datetime.date.today()
         THIRTY_DAYS_FROM_NOW = NOW - datetime.timedelta(30)
 
