@@ -4,19 +4,20 @@ import React from 'react';
 import { updateAppQuery } from '../../actions';
 
 const CommitPaginationControl = (props) => {
-  const { dispatch, pagination, isLoading } = props;
+  const { dispatch, pagination, isLoading, query } = props;
   const { next, previous, page = 1 } = pagination;
 
   const incrementPage = (e) => {
     e.preventDefault();
     const nextPage = Number(page) + 1;
-    dispatch(updateAppQuery({ page: nextPage }));
+    console.log('cq', query)
+    dispatch(updateAppQuery({ ...query, page: nextPage }));
   };
 
   const decrementPage = (e) => {
     e.preventDefault();
     const previousPage = Number(page) - 1;
-    dispatch(updateAppQuery({ page: previousPage }));
+    dispatch(updateAppQuery({ ...query, page: previousPage }));
   };
 
   return (

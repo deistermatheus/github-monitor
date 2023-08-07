@@ -15,7 +15,7 @@ class CommitListContainer extends React.Component {
 
   render() {
     const {
-      commits, dispatch, commitPagination, isLoading,
+      commits, dispatch, commitPagination, isLoading, commitQuery
     } = this.props;
     return (
       <div>
@@ -24,6 +24,7 @@ class CommitListContainer extends React.Component {
           dispatch={dispatch}
           pagination={commitPagination}
           isLoading={isLoading}
+          query={commitQuery}
         />
       </div>
     );
@@ -42,6 +43,9 @@ const mapStateToProps = (store) => ({
   commitPagination: {
     ...store.commitState.fetchCommitState.pagination,
     page: store.commitState.fetchCommitState.query.page,
+  },
+  commitQuery: {
+    ...store.commitState.fetchCommitState.query
   },
   isLoading: store.commitState.isLoading,
 });

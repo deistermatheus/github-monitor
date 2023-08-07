@@ -50,7 +50,7 @@ export function syncQueryToBrowserSearch() {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(commitQuery)) {
-      searchParams.append(key, value);
+      searchParams.set(key, value);
     }
 
     window.history.pushState({}, 'test', `${pathname}?${searchParams.toString()}`);
