@@ -3,7 +3,7 @@ from ..utils import get_dict_key_by_path
 import unittest
 
 
-class GetDictionaryKeyByPathTesst(unittest.TestCase):
+class GetDictionaryKeyByPathTest(unittest.TestCase):
     def setUp(self):
         self.default_dict = {"something": "something_value",
                              "nested": {"innerDict": {"key": "value"}}}
