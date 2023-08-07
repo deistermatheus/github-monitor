@@ -47,7 +47,6 @@ class GitHubService:
         while True:
             commits_page = requests.get(
                 request_url, headers=self.get_request_headers(user), params={**params, 'page': page}).json()
-
             if len(commits_page):
                 all_commits = all_commits + commits_page
                 page = page + 1
